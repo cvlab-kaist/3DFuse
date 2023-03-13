@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation">
+  <meta name="keywords" content="Diffusion, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation</title>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ES2EBZLG9R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ES2EBZLG9R');
+</script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Let 2D Diffusion Model Know 3D-Consistency<br> for Robust Text-to-3D Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://j0seo.github.io/">Junyoung Seo</a><sup>*1</sup>,</span>
+              <a href="https://scholar.google.com/citations?hl=ko&user=7cyLEQ0AAAAJ">Wooseok Jang</a><sup>*1</sup>,</span>
+              Min-Seop Kwak<sup>*1</sup>,</span>
+              Jaehoon Ko<sup>1</sup>,</span>
+              Hyeonsu Kim<sup>1</sup>,</span>
+              <br>
+              <a href="https://taki0112.notion.site/taki0112/Make-everyone-s-life-more-fun-via-AI-b15459d868bb490184e256cd95f26107">Junho Kim</a><sup>2</sup>,</span>
+              <a href="http://wityworks.com/">Jin-Hwa Kim</a><sup>†2</sup>,</span>
+              <a href="https://lee-jiyoung.github.io/">Jiyoung Lee</a><sup>†2</sup>,</span>
+              <a href="https://cvlab.korea.ac.kr/members/faculty">Seungryong Kim</a><sup>†1</sup>.</span>
+
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Korea University,</span>
+            <span class="author-block"><sup>2</sup>NAVER AI Lab</span>
+            <br>
+            <small><sup>*</sup>Equal contribution <sup>†</sup>Corresponding author </small>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/KU-CVLAB/3DFuse"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+        <div style="display: flex;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px;">
+            <div style="flex: 1; display: flex; justify-content: center;">Stable-DreamFusion</div>
+            <div style="flex: 1; display: flex; justify-content: center;">SJC</div>
+            <div style="flex: 1; display: flex; justify-content: center;"><b>3DFuse (Ours)</b></div>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center;">
+            <div style="flex: 1; display: flex; justify-content: center;">Stable-DreamFusion</div>
+            <div style="flex: 1; display: flex; justify-content: center;">SJC</div>
+            <div style="flex: 1; display: flex; justify-content: center;"><b>3DFuse (Ours)</b></div>
+          </div>
+        </div>
+        <div style="display: flex;">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/a_cute_little_kitten.gif">
+        <img width="49%" style="margin-right: 3px; flex: 1; " src="gif_lowres/A_photo_of_cute_hippo.gif">
+      </div>
+        <div style="display: flex; margin-bottom: 4px;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px; text-align: center;">
+            <i>"a cute little kitten"</i>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center; text-align: center;">
+            <i>"a photo of cute hippo"</i>
+          </div>
+        </div>
+        <div style="display: flex;">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/A_cute_elephant_with_a_long_trunk_and_ivory_tusks.gif">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/A_cute_pig_with_a_pink_snout_and_curly_tail.gif">
+        </div>
+        <div style="display: flex; margin-bottom: 4px;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px; text-align: center;">
+            <i>"a cute elephant with a long trunk and ivory tusks"</i>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center; text-align: center;">
+            <i>"a cute pig with a pink snout and curly tail"</i>
+          </div>
+        </div>
+        <div style="display: flex;">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/Cute_sheep_with_white_fur.gif">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/A_gentle_deer_with_a_spotted_coat_and_a_peaceful_expression.gif">
+        </div>
+        <div style="display: flex; margin-bottom: 4px;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px; text-align: center;">
+            <i>"cute sheep with white fur"</i>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center; text-align: center;">
+            <i>"a gentle deer with a spotted coat and a peaceful expression"</i>
+          </div>
+        </div>
+        <div style="display: flex;">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/A_cozy_cabin_in_the_woods_with_a_chimney_and_a_porch.gif">
+        <img width="49%" style="margin-right: 3px; flex: 1;" src="gif_lowres/A_stack_of_pancakes_with_maple_syrup_and_butter.gif">
+        </div>
+        <div style="display: flex; margin-bottom: 4px;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px; text-align: center;">
+            <i>"a cozy cabin in the woods with a chimney and a porch"</i>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center; text-align: center;">
+            <i>"a stack of pancakes with maple syrup and butter"</i>
+          </div>
+        </div>
+        <div style="display: flex;">
+        <img width="49%" style="margin-right: 3px;" src="gif_lowres/A_photo_of_comfortable_bed.gif">
+        <img width="49%" src="gif_lowres/A_fantastical_wizard's_tower_with_a_spiral_staircase_and_mysterious_artifacts.gif">
+        </div>
+        <div style="display: flex; margin-bottom: 4px;">
+          <div style="flex: 1; display: flex; justify-content: center; margin-right: 3px; text-align: center;">
+            <i>"a photo of comfortable bed"</i>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center; text-align: center;">
+            <i>"a fantastical wizard's tower with a spiral staircase <br>and mysterious artifacts"</i>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="container is-max-desktop">
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Text-to-3D generation has shown rapid progress in recent days with the advent of score distillation, a methodology of using pretrained text-to-2D diffusion models to optimize a neural radiance field (NeRF) in the zero-shot setting. 
+            However, the lack of 3D awareness in the 2D diffusion models destabilizes previous methods to reconstruct a plausible 3D scene. 
+            To address this issue, we propose 3DFuse, a novel framework that incorporates 3D awareness into pretrained 2D diffusion models, enhancing the robustness and 3D consistency of score distillation-based methods. 
+            We realize this by first constructing a coarse 3D structure of a given text prompt and then utilizing its view-specific depth map as a condition for the diffusion model. 
+            Additionally, we introduce a training strategy that enables the 2D diffusion model learns to handle the errors and sparsity within the coarse 3D structure for robust generation, 
+            as well as a method for ensuring semantic consistency throughout all viewpoints of the scene. Our framework surpasses the limitations of prior arts, 
+            and has significant implications for 3D consistent generation of 2D diffusion models. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <br>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <img width="60%" src="imgs/motivation1.png"> <br><b>
+        <div style="display: flex; justify-content: center; text-align: center; margin-bottom: 5px;"> (a) Naive score distillation </div></b>
+        <img width="60%" src="imgs/motivation2.png"> <br><b>
+        <div style="display: flex; justify-content: center; text-align: center;">  (b) 3D aware score distillation (Ours) </div> </b>
+        <br>
+        <div class="content has-text-justified">
+          <p>
+            (a) Previous methods only use noisy rendered images and prompt itself for score distillation through diffusion model, resulting in poor 3D coherence. 
+            (b) Our 3DFuse addresses this issue and shows robust performance in recovering 3D-consistent scene.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <br>  <br>
+
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">3DFuse Framework</h2>
+        <img width="100%" src="imgs/3dfuse.png">
+        <br><br>
+        <div class="content has-text-justified">
+          <p>
+            In the framework, semantic code is sampled to reduce the text prompt ambiguity by generating an image based on the text prompt and then optimizing the prompt’s embedding to match the generated image.
+            Our auxiliary module receives this semantic code to synthesize view-specific depth maps as a condition to the diffusion U-net. The module also consists of a sparse depth injector to implicitly incorporate 3D awareness by utilizing an external 3D prior,
+            and LoRA layers to maintain semantic consistency.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+    <br><br>
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">View-dependent 2D Generation</h2>
+          <img width="100%" src="imgs/2dgen.png">
+          <p>
+            (a) results of view augmented prompting, and (b) our results with 3DFuse framework.
+          </p>
+          
+        </div>
+      </div>
+
+      <div class="column">
+        <h2 class="title is-3">Image-conditional Generation</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <div style="display: flex; justify-content: center;">
+              <img width="35%" style="margin-right: 10px; margin-bottom: -10pt;" src="imgs/imagecon1.jpeg">
+              <img width="35%" style="margin-bottom: -10pt;" src="gif_lowres/imagecon1.gif">
+              </div> <br>
+              <div style="display: flex; justify-content: center;">
+                <img width="35%" style="margin-right: 10px;" src="imgs/imagecon2.jpeg">
+                <img width="35%" src="gif_lowres/imagecon2.gif">
+                </div><br>
+               
+             
+            
+            <p>
+              Instead of generating the initial image rom a text prompt, we directly give an input image, which effectively reconfigures our framework as an image-conditional setting.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  
+    <br>
+
+</section>
+
+
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code></code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <h2 class="subtitle has-text-centered">
+        <div class="content">
+            This website is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+            We thank the authors for open-sourcing the source code. 
+        </div>
+      </h2>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
