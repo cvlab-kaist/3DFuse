@@ -222,7 +222,7 @@
         <div class="content has-text-justified">
           <p>
             In the framework, semantic code is sampled to reduce the text prompt ambiguity by generating an image based on the text prompt and then optimizing the prompt’s embedding to match the generated image.
-            Our auxiliary module receives this semantic code to synthesize view-specific depth maps as a condition to the diffusion U-net. The module also consists of a sparse depth injector to implicitly incorporate 3D awareness by utilizing an external 3D prior,
+            Our consistency injection module receives this semantic code to synthesize view-specific depth maps as a condition to the diffusion U-net. The module also consists of a sparse depth injector to implicitly incorporate 3D awareness by utilizing an external 3D prior,
             and LoRA layers to maintain semantic consistency.
           </p>
         </div>
