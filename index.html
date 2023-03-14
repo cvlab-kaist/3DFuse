@@ -201,13 +201,15 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Text-to-3D generation has shown rapid progress in recent days with the advent of score distillation, a methodology of using pretrained text-to-2D diffusion models to optimize a neural radiance field (NeRF) in the zero-shot setting. 
-            However, the lack of 3D awareness in the 2D diffusion models destabilizes previous methods to reconstruct a plausible 3D scene. 
-            To address this issue, we propose 3DFuse, a novel framework that incorporates 3D awareness into pretrained 2D diffusion models, enhancing the robustness and 3D consistency of score distillation-based methods. 
-            We realize this by first constructing a coarse 3D structure of a given text prompt and then utilizing its view-specific depth map as a condition for the diffusion model. 
-            Additionally, we introduce a training strategy that enables the 2D diffusion model learns to handle the errors and sparsity within the coarse 3D structure for robust generation, 
-            as well as a method for ensuring semantic consistency throughout all viewpoints of the scene. Our framework surpasses the limitations of prior arts, 
-            and has significant implications for 3D consistent generation of 2D diffusion models. 
+            Text-to-3D generation has shown rapid progress in recent days with the advent of score distillation, 
+            a methodology of using pretrained text-to-2D diffusion models to optimize neural radiance field (NeRF) in the zero-shot setting. 
+            However, the lack of 3D awareness in the 2D diffusion models destabilizes score distillation-based methods from reconstructing 
+            a plausible 3D scene. To address this issue, we propose \ours, a novel framework that incorporates 3D awareness into pretrained 2D diffusion 
+            models, enhancing the robustness and 3D consistency of score distillation-based methods. We realize this by first constructing 
+            a coarse 3D structure of a given text prompt and then utilizing projected, view-specific depth map as a condition for the diffusion model. 
+            Additionally, we introduce a training strategy that enables the 2D diffusion model learns to handle the errors and sparsity within 
+            the coarse 3D structure for robust generation, as well as a method for ensuring semantic consistency throughout all viewpoints of the scene. 
+            Our framework surpasses the limitations of prior arts, and has significant implications for 3D consistent generation of 2D diffusion models.
           </p>
         </div>
       </div>
