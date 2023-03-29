@@ -27,10 +27,8 @@ Enter your own prompt and enjoy! With this gradio app, you can preview the point
 python gradio_app.py
 # or python gradio_app.py --share
 ```
-<div style="text-align:center">
-    <img src='imgs/ex1.png' style="display:inline-block;vertical-align:middle" width=45% height=45%>
-    <img src='imgs/ex2.png' style="display:inline-block;vertical-align:middle" width=45% height=45%>
-</div>
+<img src='imgs/ex1.png'>
+<img src='imgs/ex2.png'>
 
 ## Text-to-3D Generation
 After modifying the `run.sh` file with the desired prompt and hyperparameters, please execute the following command:
