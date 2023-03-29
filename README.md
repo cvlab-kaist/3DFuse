@@ -4,11 +4,6 @@
 <br>
 This is official implementation of the paper "Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation". The last column of each example is our result.
 
-<center>
-<img src="imgs/1.gif" width="30%" height="30%"> <img src="imgs/2.gif" width="30%" height="30%"> <br>
-<img src="imgs/3.gif" width="30%" height="30%"> <img src="imgs/4.gif" width="30%" height="30%">
-</center>
-
 ## Introduction
 
 <center>
