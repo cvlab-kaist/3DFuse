@@ -1,0 +1,1 @@
+{"beat": "2023-03-29T17:02:31", "done": true, "meter": "10000/10000 [40:54<00:00,  1.86it/s]", "elapsed": 2454, "caller": "/home/cvlab07/project/junyoung/3DFuse/run_3DFuse.py:277 - fuse_3d"}
