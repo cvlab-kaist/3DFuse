@@ -2,10 +2,16 @@
 <a href="https://arxiv.org/abs/2303.07937"><img src="https://img.shields.io/badge/arXiv-2303.07937-%23B31B1B"></a>
 <a href="https://ku-cvlab.github.io/3DFuse/"><img src="https://img.shields.io/badge/Project%20Page-online-brightgreen"></a>
 <br>
+
+<p align="center">
+<img src="imgs/1.gif" width="40%">
+<img src="imgs/2.gif" width="40%">
+<img src="imgs/3.gif" width="40%">
+<img src="imgs/4.gif" width="40%">
+</p>
 This is official implementation of the paper "Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation". The last column of each example is our result.
 
 ## Introduction
-
 <center>
 <img src="https://ku-cvlab.github.io/3DFuse/imgs/3dfuse.png" width="100%" height="100%"> 
 </center>
