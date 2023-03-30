@@ -12,7 +12,7 @@
 This is official implementation of the paper "Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation". The last column of each example is our result.
 
 ## ⚡️News
-**❗️[IMPORTANT] 2023.03.31:**  We found that we typed an incorrect version of the model for point cloud inference. **The fixed commit produce much better results.**
+**❗️[IMPORTANT] 2023.03.31:**  We found that we typed an incorrect version of the model for point cloud inference. **The fixed commit produces much better results.**
 
 ## Introduction
 <center>
