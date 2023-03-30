@@ -11,6 +11,9 @@
 </p>
 This is official implementation of the paper "Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation". The last column of each example is our result.
 
+## ⚡️News
+**❗️[IMPORTANT] 2023.03.31:**  We found that we typed an incorrect version of the model necessary for point cloud inference. **The fixed commit will produce much better results.**
+
 ## Introduction
 <center>
 <img src="https://ku-cvlab.github.io/3DFuse/imgs/3dfuse.png" width="100%" height="100%"> 
