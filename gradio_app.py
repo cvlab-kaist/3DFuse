@@ -48,7 +48,7 @@ def gen_pc_from_prompt(intermediate, num_initial_image, prompt, keyword, type, b
     
     seed_everything(seed=seed)
     if keyword not in prompt:
-        raise gr.Error("Prompt should contaion keyword!")
+        raise gr.Error("Prompt should contain keyword!")
     elif " " in keyword:
         raise gr.Error("Keyword should be one word!")
     
@@ -101,7 +101,7 @@ def gen_pc_from_image(intermediate, image, prompt, keyword, bg_preprocess, seed)
     
     seed_everything(seed=seed)
     if keyword not in prompt:
-        raise gr.Error("Prompt should contaion keyword!")
+        raise gr.Error("Prompt should contain keyword!")
     elif " " in keyword:
         raise gr.Error("Keyword should be one word!")
     
@@ -258,7 +258,7 @@ if __name__ == '__main__':
                     with gr.Row():
                         button_gen_pc_2 = gr.Button("Generate Point Cloud", variant='secondary')
                         button_gen_3d_2 = gr.Button("Generate 3D", variant='primary')
-                    gr.Markdown("Note: Our framework is not designed with the goal of single shot reconstruction, so it may be difficult to reflect the details of the given image. This can be improved by additional loss function such as NeuralLift-360 utilizing pixel loss.")
+                    gr.Markdown("Note: A photo showing the entire object in a front view is recommended. Also, our framework is not designed with the goal of single shot reconstruction, so it may be difficult to reflect the details of the given image.")
                     
                     
                 with gr.Row(scale=1.):
