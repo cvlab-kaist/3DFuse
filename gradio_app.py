@@ -244,7 +244,7 @@ if __name__ == '__main__':
                         pivot_step = gr.Slider(0, 1000, value=500, step=1, label='Number of pivotal tuning step for LoRA')
                     with gr.Row():
                         button_gen_pc = gr.Button("Generate Point Cloud", interactive=True, variant='secondary')
-                        button_gen_3d = gr.Button("Generate 3D", interactive=False, variant='primary')
+                        button_gen_3d = gr.Button("Generate 3D", interactive=True, variant='primary')
                         
                 with gr.Tab("Image to 3D"):
                     image_input = gr.Image(source='upload', type="pil", interactive=True)
