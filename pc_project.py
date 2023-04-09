@@ -145,7 +145,7 @@ def pointcloud_renderer(point_cloud, camera, raster_settings, device):
     
 def point_e(device,exp_dir):
     print('creating base model...')
-    base_name = 'base40M' # use base300M or base1B for better results
+    base_name = 'base1B' # use base300M or base1B for better results
     base_model = model_from_config(MODEL_CONFIGS[base_name], device)
     base_model.eval()
     base_diffusion = diffusion_from_config(DIFFUSION_CONFIGS[base_name])
@@ -183,7 +183,7 @@ def point_e(device,exp_dir):
 
 def point_e_gradio(img,device):
     print('creating base model...')
-    base_name = 'base40M' # use base300M or base1B for better results
+    base_name = 'base1B' # use base300M or base1B for better results
     base_model = model_from_config(MODEL_CONFIGS[base_name], device)
     base_model.eval()
     base_diffusion = diffusion_from_config(DIFFUSION_CONFIGS[base_name])

@@ -31,14 +31,19 @@ def gen_3d(model, intermediate, prompt, keyword, seed, ti_step, pt_step) :
     seed_everything(seed)
     model = dispatch_gradio(SJC_3DFuse, prompt, keyword, ti_step, pt_step, seed)
     setting = model.dict()
-    exp_dir = os.path.join(setting['exp_dir'],keyword)
+    i = 0
+    exp_dir = os.path.join(setting['exp_dir'],keyword+"_"+str(i).zfill(4))
+    while os.path.exists(exp_dir):
+        i += 1
+        exp_dir = os.path.join(setting['exp_dir'],keyword+"_"+str(i).zfill(4))
+        
     initial_images_dir = os.path.join(exp_dir, 'initial_image')
     os.makedirs(initial_images_dir,exist_ok=True)
     
     for idx,img in enumerate(images) :
         img.save( os.path.join(initial_images_dir, f"instance{idx}.png") )
     
-    yield from model.run_gradio(points)
+    yield from model.run_gradio(points,exp_dir)
     
     intermediate.is_generating = False
     
@@ -52,7 +57,7 @@ def gen_pc_from_prompt(intermediate, num_initial_image, prompt, keyword, type, b
     elif " " in keyword:
         raise gr.Error("Keyword should be one word!")
     
-    images = gen_init(num_initial_image=num_initial_image, prompt=prompt, type=type,  bg_preprocess=bg_preprocess)
+    images = gen_init(num_initial_image=num_initial_image, prompt=prompt,seed=seed, type=type,  bg_preprocess=bg_preprocess)
     points = point_e_gradio(images[0],'cuda')
     
     intermediate.images = images
@@ -169,11 +174,13 @@ def gen_pc_from_image(intermediate, image, prompt, keyword, bg_preprocess, seed)
 
     return image, fig
 
-def gen_init(num_initial_image, prompt, type="Karlo",  bg_preprocess=False):
+def gen_init(num_initial_image, prompt,seed,type="Karlo",  bg_preprocess=False):
+    
     pipe = UnCLIPPipeline.from_pretrained("kakaobrain/karlo-v1-alpha", torch_dtype=torch.float16) if type=="Karlo (Recommended)" \
         else DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
     pipe = pipe.to('cuda')
-    
+
+
     view_prompt=["front view of ","overhead view of ","side view of ", "back view of "]
     
     if bg_preprocess:
@@ -191,6 +198,7 @@ def gen_init(num_initial_image, prompt, type="Karlo",  bg_preprocess=False):
                         fp16=False)
 
     images = []
+    generator = torch.Generator(device='cuda').manual_seed(seed)
     for i in range(num_initial_image):
         t=", white background" if bg_preprocess else ", white background"
         if i==0:
@@ -198,7 +206,7 @@ def gen_init(num_initial_image, prompt, type="Karlo",  bg_preprocess=False):
         else:
             prompt_ = f"{view_prompt[i%4]}{prompt}"
 
-        image = pipe(prompt_).images[0]
+        image = pipe(prompt_, generator=generator).images[0]
         
         if bg_preprocess:
             # motivated by NeuralLift-360 (removing bg)
@@ -244,7 +252,7 @@ if __name__ == '__main__':
                         pivot_step = gr.Slider(0, 1000, value=500, step=1, label='Number of pivotal tuning step for LoRA')
                     with gr.Row():
                         button_gen_pc = gr.Button("Generate Point Cloud", interactive=True, variant='secondary')
-                        button_gen_3d = gr.Button("Generate 3D", interactive=False, variant='primary')
+                        button_gen_3d = gr.Button("Generate 3D", interactive=True, variant='primary')
                         
                 with gr.Tab("Image to 3D"):
                     image_input = gr.Image(source='upload', type="pil", interactive=True)

@@ -123,10 +123,10 @@ class SJC_3DFuse(BaseConf):
         next(fuse_3d(**cfgs, poser=poser,model=model,vox=vox,exp_dir=exp_dir, points=points, is_gradio=False))
         
         
-    def run_gradio(self, points):
+    def run_gradio(self, points,exp_dir):
             cfgs = self.dict()
             initial = cfgs.pop('initial')
-            exp_dir=os.path.join(cfgs.pop('exp_dir'),initial)
+            # exp_dir=os.path.join(cfgs.pop('exp_dir'),initial)
             
             # Optimization  and pivotal tuning for LoRA
             yield gr.update(value=None), "Tuning for the LoRA layer is starting now. It will take approximately ~10 mins.", gr.update(value=None) 
