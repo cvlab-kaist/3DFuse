@@ -26,7 +26,8 @@ We introduce 3DFuse, a novel framework that incorporates 3D awareness into pretr
 
 ## 🔥TODO
 - [x] 3D Generation/Gradio Demo Code
-- [ ] Colab Code / HuggingFace🤗 Demo Release
+- [x] HuggingFace🤗 Demo Release
+- [ ] Colab Demo Release
 - [ ] Mesh Converting Code
 
 ## Installation
