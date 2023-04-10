@@ -90,11 +90,11 @@ def dispatch(module):
 
     mod.run()
     
-def dispatch_gradio(module, prompt, keyword, ti_step, pt_step, seed):
+def dispatch_gradio(module, prompt, keyword, ti_step, pt_step, seed, exp_instance_dir):
     cfg = optional_load_config("gradio_init.yml")
 
     cfg['sd']['prompt'] = prompt
-    cfg['sd']['dir'] = os.path.join(cfg['exp_dir'],keyword,'lora/final_lora.safetensors')
+    cfg['sd']['dir'] = os.path.join(exp_instance_dir,'lora/final_lora.safetensors')
     cfg['ti_step'] = ti_step
     cfg['pt_step'] = pt_step
     cfg['initial'] = keyword

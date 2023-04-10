@@ -87,23 +87,23 @@ class SJC_3DFuse(BaseConf):
         seed = cfgs.pop('random_seed')
         seed_everything(seed)
         initial = cfgs.pop('initial')
-        exp_dir=os.path.join(cfgs.pop('exp_dir'),initial)
+        exp_instance_dir=os.path.join(cfgs.pop('exp_dir'),initial)
         
         initial_prompt=cfgs['sd']['prompt']
         semantic_model = cfgs.pop('semantic_model')
         
         # Initial image generation
-        instance_dir=os.path.join(exp_dir,'initial_image')
+        image_dir=os.path.join(exp_instance_dir,'initial_image')
         
         if semantic_model == "Karlo":
-            semantic_karlo(initial_prompt,instance_dir,cfgs['num_initial_image'],cfgs['bg_preprocess'])
+            semantic_karlo(initial_prompt,image_dir,cfgs['num_initial_image'],cfgs['bg_preprocess'], seed)
         elif semantic_model == "SD":
-            semantic_sd(initial_prompt,instance_dir,cfgs['num_initial_image'],cfgs['bg_preprocess'])
+            semantic_sd(initial_prompt,image_dir,cfgs['num_initial_image'],cfgs['bg_preprocess'], seed)
         else:
             raise NotImplementedError
         
         # Optimization  and pivotal tuning for LoRA
-        semantic_coding(exp_dir,cfgs,self.sd,initial)
+        semantic_coding(exp_instance_dir,cfgs,self.sd,initial)
         
         
         # Load SD with Consistency Injection Module
@@ -117,20 +117,20 @@ class SJC_3DFuse(BaseConf):
         poser = self.pose.make()
         
         # Get coarse point cloud from off-the-shelf model
-        points = point_e(device=device_glb,exp_dir=exp_dir)
+        points = point_e(device=device_glb,exp_dir=exp_instance_dir)
 
         # Score distillation
-        next(fuse_3d(**cfgs, poser=poser,model=model,vox=vox,exp_dir=exp_dir, points=points, is_gradio=False))
+        next(fuse_3d(**cfgs, poser=poser,model=model,vox=vox,exp_instance_dir=exp_instance_dir, points=points, is_gradio=False))
         
         
-    def run_gradio(self, points,exp_dir):
+    def run_gradio(self, points,exp_instance_dir):
             cfgs = self.dict()
             initial = cfgs.pop('initial')
             # exp_dir=os.path.join(cfgs.pop('exp_dir'),initial)
             
             # Optimization  and pivotal tuning for LoRA
             yield gr.update(value=None), "Tuning for the LoRA layer is starting now. It will take approximately ~10 mins.", gr.update(value=None) 
-            semantic_coding(exp_dir,cfgs,self.sd,initial)
+            semantic_coding(exp_instance_dir,cfgs,self.sd,initial)
             
             
             # Load SD with Consistency Injection Module
@@ -144,16 +144,15 @@ class SJC_3DFuse(BaseConf):
             poser = self.pose.make()
             
             # Score distillation
-            yield from fuse_3d(**cfgs, poser=poser,model=model,vox=vox,exp_dir=exp_dir, points=points, is_gradio=True)
+            yield from fuse_3d(**cfgs, poser=poser,model=model,vox=vox,exp_instance_dir=exp_instance_dir, points=points, is_gradio=True)
 
 
 def fuse_3d(
     poser, vox, model: ScoreAdapter,
     lr, n_steps, emptiness_scale, emptiness_weight, emptiness_step, emptiness_multiplier,
-    depth_weight, var_red, exp_dir, points, is_gradio, **kwargs
+    depth_weight, var_red, exp_instance_dir, points, is_gradio, **kwargs
 ):
     del kwargs
-    
     if is_gradio:
         yield gr.update(visible=True), "LoRA layers tuning has just finished. \nScore distillation has started.", gr.update(visible=True)
 
@@ -184,7 +183,7 @@ def fuse_3d(
         
     with tqdm(total=n_steps) as pbar, \
         HeartBeat(pbar) as hbeat, \
-            EventStorage(output_dir=os.path.join(exp_dir,'3d')) as metric:
+            EventStorage(output_dir=os.path.join(exp_instance_dir,'3d')) as metric:
 
         for i in range(len(poses_)):
             if fuse.on_break():
@@ -268,7 +267,7 @@ def fuse_3d(
             evaluate(model, vox, poser)
         
         if is_gradio:    
-            yield gr.update(visible=True), f"Generation complete. Please check the video below. \nThe result files and logs are located at {exp_dir}", gr.update(value=os.path.join(exp_dir,'3d/result_10000/video/step_100_.mp4'))
+            yield gr.update(visible=True), f"Generation complete. Please check the video below. \nThe result files and logs are located at {exp_instance_dir}", gr.update(value=os.path.join(exp_instance_dir,'3d/result_10000/video/step_100_.mp4'))
         else :
             yield None
     

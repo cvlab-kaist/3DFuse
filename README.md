@@ -1,6 +1,7 @@
 # Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation
 <a href="https://arxiv.org/abs/2303.07937"><img src="https://img.shields.io/badge/arXiv-2303.07937-%23B31B1B"></a>
 <a href="https://ku-cvlab.github.io/3DFuse/"><img src="https://img.shields.io/badge/Project%20Page-online-brightgreen"></a>
+<a href="https://huggingface.co/spaces/jyseo/3DFuse"><img src="https://camo.githubusercontent.com/00380c35e60d6b04be65d3d94a58332be5cc93779f630bcdfc18ab9a3a7d3388/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f25463025394625413425393725323048756767696e67253230466163652d5370616365732d626c7565"></a>
 <br>
 
 <p align="center">
@@ -12,7 +13,9 @@
 This is official implementation of the paper "Let 2D Diffusion Model Know 3D-Consistency for Robust Text-to-3D Generation". The last column of each example is our result.
 
 ## ⚡️News
-**❗️[IMPORTANT] 2023.03.31:**  We found that we typed an incorrect version of the model for point cloud inference. **The fixed commit produces much better results.**
+**❗️2023.04.10:**  We've opened the [**HuggingFace Demo**](https://huggingface.co/spaces/jyseo/3DFuse)! Also, we fixed minor issues, including the seed not being fixed.
+
+**❗️2023.03.31:**  We found that we typed an incorrect version of the model for point cloud inference. **The fixed commit produces much better results.**
 
 ## Introduction
 <center>

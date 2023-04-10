@@ -5,7 +5,7 @@ from lora_diffusion.cli_lora_pti import train
 from PIL import Image
 import numpy as np
 
-def semantic_karlo(prompt, output_dir, num_initial_image, bg_preprocess=False):
+def semantic_karlo(prompt, output_dir, num_initial_image, bg_preprocess, seed):
     pipe = UnCLIPPipeline.from_pretrained("kakaobrain/karlo-v1-alpha", torch_dtype=torch.float16)
     pipe = pipe.to('cuda')
     view_prompt=["front view of ","overhead view of ","side view of ", "back view of "]
@@ -24,7 +24,10 @@ def semantic_karlo(prompt, output_dir, num_initial_image, bg_preprocess=False):
                         trimap_dilation=30,
                         trimap_erosion_iters=5,
                         fp16=False)
+        
+        
 
+    generator = torch.Generator(device='cuda').manual_seed(seed)
     
     for i in range(num_initial_image):
         t=", white background" if bg_preprocess else ", white background"
@@ -33,7 +36,7 @@ def semantic_karlo(prompt, output_dir, num_initial_image, bg_preprocess=False):
         else:
             prompt_ = f"{view_prompt[i%4]}{prompt}"
 
-        image = pipe(prompt_).images[0]
+        image = pipe(prompt_, generator=generator).images[0]
         fn=f"instance{i}.png"
         os.makedirs(output_dir,exist_ok=True)
         
@@ -52,7 +55,7 @@ def semantic_karlo(prompt, output_dir, num_initial_image, bg_preprocess=False):
         image.save(os.path.join(output_dir,fn))
         
         
-def semantic_sd(prompt, output_dir, num_initial_image, bg_preprocess=False):
+def semantic_sd(prompt, output_dir, num_initial_image, bg_preprocess, seed):
     pipe = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
     pipe = pipe.to('cuda')
     view_prompt=["front view of ","overhead view of ","side view of ", "back view of "]
@@ -72,7 +75,7 @@ def semantic_sd(prompt, output_dir, num_initial_image, bg_preprocess=False):
                         trimap_erosion_iters=5,
                         fp16=False)
 
-    
+    generator = torch.Generator(device='cuda').manual_seed(seed)
     for i in range(num_initial_image):
         t=", white background" if bg_preprocess else ", white background"
         if i==0:
@@ -80,7 +83,7 @@ def semantic_sd(prompt, output_dir, num_initial_image, bg_preprocess=False):
         else:
             prompt_ = f"{view_prompt[i%4]}{prompt}"
 
-        image = pipe(prompt_).images[0]
+        image = pipe(prompt_, generator=generator).images[0]
         fn=f"instance{i}.png"
         os.makedirs(output_dir,exist_ok=True)
         

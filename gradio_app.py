@@ -29,21 +29,22 @@ def gen_3d(model, intermediate, prompt, keyword, seed, ti_step, pt_step) :
     del model
     
     seed_everything(seed)
-    model = dispatch_gradio(SJC_3DFuse, prompt, keyword, ti_step, pt_step, seed)
-    setting = model.dict()
     i = 0
-    exp_dir = os.path.join(setting['exp_dir'],keyword+"_"+str(i).zfill(4))
-    while os.path.exists(exp_dir):
+    exp_instance_dir = os.path.join("./results",keyword+"_"+str(i).zfill(4))
+    while os.path.exists(exp_instance_dir):
         i += 1
-        exp_dir = os.path.join(setting['exp_dir'],keyword+"_"+str(i).zfill(4))
+        exp_instance_dir = os.path.join("./results",keyword+"_"+str(i).zfill(4))
         
-    initial_images_dir = os.path.join(exp_dir, 'initial_image')
+    initial_images_dir = os.path.join(exp_instance_dir, 'initial_image')
     os.makedirs(initial_images_dir,exist_ok=True)
     
     for idx,img in enumerate(images) :
         img.save( os.path.join(initial_images_dir, f"instance{idx}.png") )
+        
+        
+    model = dispatch_gradio(SJC_3DFuse, prompt, keyword, ti_step, pt_step, seed, exp_instance_dir)
     
-    yield from model.run_gradio(points,exp_dir)
+    yield from model.run_gradio(points,exp_instance_dir)
     
     intermediate.is_generating = False
     
